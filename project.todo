@@ -1,0 +1,7 @@
+Todos:
+  ☐ Needs to have some indicator of progress (ie 0-100%) so user understands they need to and are scrolling, since the presentation is fixed
+  ☐ Need to think about how I can simplify this for it to be reusable:
+    * Using components for slides doesn't work because sometimes you want to transition things the are both in the scene (ie. background images)
+    * Could maybe just let the user control the whole scene and this component just adds the presentation and trigger (behind the scenes stuff)
+      * Not as intuitive but more flexible
+      * How would they change between slides?

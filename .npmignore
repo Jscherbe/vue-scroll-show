@@ -1,0 +1,8 @@
+/src
+/public
+index.html
+project.todo
+.eslintrc.cjs
+jsconfig.json
+.prettierrc
+vite.config.js
