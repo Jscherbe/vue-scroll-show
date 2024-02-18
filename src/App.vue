@@ -6,7 +6,9 @@
         v-for="(slide, index) in slides" 
         :key="index"
       >
-        {{ slide.text }}
+        <div class="container">
+          {{ slide.text }}
+        </div>
       </ScrollShowSlide>
     </template>
     <template #background>
