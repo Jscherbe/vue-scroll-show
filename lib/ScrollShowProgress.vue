@@ -8,10 +8,11 @@
 </template>
 
 <script>
+  import { PROGRESS } from "./symbols.js";
   export default {
     name: "ScrollShowProgress",
-    props: {
-      progress: Number
+    inject: {
+      progress: { from: PROGRESS },
     }
   };
 </script>
@@ -19,6 +20,7 @@
 <style lang="scss">
   .scroll-show__progress {
     position: absolute;
+    z-index: 100;
     bottom: 0;
     left: 0;
     right: 0;

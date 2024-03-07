@@ -10,41 +10,12 @@
     - 
     -->
     <div class="scroll-show__presentation" ref="presentation">
-      <ul v-if="!noNav" class="scroll-show__nav">
-        <li 
-          class="scroll-show__nav-item"
-          v-for="(_, index) in triggers"
-          :key="index"
-          :class="{ 'is-active' : index === activeIndex }"
-        >
-          <button 
-            @click="goto(index)"
-            class="scroll-show__nav-button"
-            :aria-label="navAriaLabel(index)"
-            :class="{ 'is-active' : index === activeIndex }"
-          >
-            <slot 
-              name="nav"
-              :index="index"
-              :active="index === activeIndex"
-            >
-              {{  index + 1 }}
-            </slot>
-          </button>
-        </li>
-      </ul>
+      
 
       <slot 
         :activeIndex="activeIndex" 
         :progress="progress"
       />
- 
-      <div v-if="!noProgress" class="scroll-show__progress">
-        <div 
-          class="scroll-show__progress-bar" 
-          :style="{ transform : `scaleX(${ progress })` }"
-        ></div>
-      </div>
     </div>
     <!-- 
       Triggers: Responsible only for taking up space and triggering
@@ -65,9 +36,12 @@
 </template>
 
 <script>
+  import { computed } from "vue";
   import * as ScrollMagic from "scrollmagic";
   import { debounce } from "@ulu/utils/performance.js";
   import { windowHeight } from "@ulu/utils/browser/dom.js";
+  import { ACTIVE_INDEX, TRIGGERS, GOTO, PROGRESS } from "./symbols.js";
+  
   export default {
     name: "ScrollShow",
     props: {
@@ -101,6 +75,14 @@
         triggers: this.createTriggers(),
         active: false, // Else it is after
         scrollDirection: null,
+      };
+    },
+    provide() {
+      return {
+        [ACTIVE_INDEX]: computed(() => this.activeIndex),
+        [PROGRESS]: computed(() => this.progress),
+        [TRIGGERS]: computed(() => this.triggers),
+        [GOTO]: (index) => this.goto(index)
       };
     },
     methods: {
@@ -235,39 +217,6 @@
     // before it disengages
     padding-bottom: 100vh;
   }
-  .scroll-show__nav {
-    position: absolute;
-    z-index: 100;
-    width: auto;
-    top: 50%;
-    right: 2rem;
-    width: max-content;
-    // margin-left: auto;
-    // margin-right: 2em;
-  }
-  .scroll-show__nav-list {
-    height: 100%;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-auto-flow: row;
-    grid-template-rows: auto;
-  }
-  .scroll-show__nav-item {
-    display: flex;
-    align-items: center;
-    justify-items: center;
-  }
-  .scroll-show__progress {
-    position: absolute;
-    z-index: 100;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.4);
-  }
-  .scroll-show__progress-bar {
-    background-color: rgba(255, 255, 255, 0.6);
-    height: 4px;
-    transform-origin: left center;
-  }
+  
+  
 </style>
