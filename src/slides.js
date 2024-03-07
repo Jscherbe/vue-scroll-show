@@ -10,18 +10,18 @@ const text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis fini
 export const slides = ref([
   {
     image: image1,
-    text: text
+    text: "This is slide 1"
   },
   {
     image: image2,
-    text: text
+    text: "2. " + text
   },
   {
     image: image3,
-    text: text
+    text: "This is slide 3"
   },
   {
     image: image4,
-    text: text
+    text: "This is slide 4"
   }
 ]);
