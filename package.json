@@ -23,7 +23,7 @@
     "dev": "vite",
     "dev:force": "vite --force",
     "build": "vite build",
-    "build-demo": "vite build --config vite.config.demo.js",
+    "build-docs": "vite build --config vite.config.demo.js",
     "preview": "vite preview",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },

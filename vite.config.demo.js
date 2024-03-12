@@ -6,6 +6,6 @@ export default defineConfig({
     vue(),
   ],
   build: {
-    outDir: "dist-demo"
+    outDir: "docs"
   }
 });
