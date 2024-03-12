@@ -1,10 +1,11 @@
-# vue-scroll-show
+# @ulu/vue-scroll-show
 
-Scroll based presentation component
+Minimal component to create sticky scrolling based slideshow. Uses [Scrollmagic](https://www.npmjs.com/package/scrollmagic) library and position sticky to create scenes (like scroll keyframes). 
+
+Note: This component just provides a way to create scroll based sticky presentations. It doesn't provide styling, slides, or animations. It does provide two optional child components, 'ScrollShowNav' for display a list of links to each scene in a given presentation, and 'ScrollShowProgress' which provides a progress bar.
+
+## Usage
+
+See demo at "./src/App.vue" in this repository for complete example(s).
 
 
-## Design Notes
-
-- Uses slots so user can decide what's in the DOM
-  - For us we want to have all the markup rendered, and hide/show SEO
-  - Other use cases may want it to be dynamic (just swapping things out)

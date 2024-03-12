@@ -7,7 +7,7 @@
       :class="{ 'is-active' : index === activeIndex }"
     >
       <button 
-        @click="goto(index)"
+        @click="scrollTo(index)"
         class="scroll-show__nav-button"
         :aria-label="`goto part ${ index }`"
         :class="{ 'is-active' : index === activeIndex }"
@@ -25,13 +25,13 @@
 </template>
 
 <script>
-  import { ACTIVE_INDEX, TRIGGERS, GOTO } from "./symbols.js";
+  import { ACTIVE_INDEX, TRIGGERS, SCROLLTO } from "./symbols.js";
   export default {
     name: "ScrollShowNav",
     inject: {
       activeIndex: { from: ACTIVE_INDEX },
       triggers: { from: TRIGGERS },
-      goto: { from: GOTO }
+      scrollTo: { from: SCROLLTO }
     }
   };
 </script>

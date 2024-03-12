@@ -1,17 +1,29 @@
 {
   "name": "@ulu/vue-scroll-show",
   "version": "0.0.1",
-  "description": "Scrolling based slideshow compenents",
-  "private": true,
+  "description": "Minimal component to create sticky scrolling based slideshow. Uses scrollmagic library and position sticky to create scenes (like scroll keyframes). ",
   "type": "module",
+  "main": "./dist/lib.umd.cjs",
+  "module": "./dist/lib.js",
   "exports": {
-    "./*.vue": "./lib/*.vue",
-    "./*": "./lib/*"
+    ".": {
+      "import": "./dist/lib.js",
+      "require": "./dist/lib.umd.cjs"
+    }
   },
+  "keywords" : [
+    "scroll",
+    "animation",
+    "keyframes",
+    "vue",
+    "scroll-magic",
+    "sticky"
+  ],
   "scripts": {
     "dev": "vite",
     "dev:force": "vite --force",
     "build": "vite build",
+    "build-demo": "vite build --config vite.config.demo.js",
     "preview": "vite preview",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
@@ -23,20 +35,19 @@
     "url": "https://github.com/Jscherbe/vue-scroll-show/issues"
   },
   "peerDependencies": {
-    "vue": ">= 3"
+    "vue": ">= 3",
+    "@ulu/utils" : "^0.0.10"
+  },
+  "dependencies": {
+    "scrollmagic": "^2.0.8"
   },
   "devDependencies": {
     "@ulu/eslint-config": "^0.0.1",
     "@ulu/frontend": "^0.0.23",
-    "@ulu/utils" : "^0.0.10",
     "@vitejs/plugin-vue": "^5.0.3",
     "eslint": "^8.49.0",
     "eslint-plugin-vue": "^9.17.0",
     "sass": "^1.70.0",
-    "vite": "^5.0.11",
-    "vue": "^3.4.15"
-  },
-  "dependencies": {
-    "scrollmagic": "^2.0.8"
+    "vite": "^5.0.11"
   }
 }

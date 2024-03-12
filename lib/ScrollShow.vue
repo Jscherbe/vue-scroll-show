@@ -16,6 +16,11 @@
       <slot 
         :activeIndex="activeIndex" 
         :progress="progress"
+        :scrollTo="scrollTo"
+        :triggers="triggers"
+        :active="active"
+        :scrollDirection="scrollDirection"
+        :resolvedHeight="resolvedHeight"
       />
     </div>
     <!-- 
@@ -49,7 +54,7 @@
   import { debounce } from "@ulu/utils/performance.js";
   import { windowHeight } from "@ulu/utils/browser/dom.js";
   import { separateCssUnit } from "@ulu/utils/string.js";
-  import { ACTIVE_INDEX, TRIGGERS, GOTO, PROGRESS } from "./symbols.js";
+  import { ACTIVE_INDEX, TRIGGERS, SCROLLTO, PROGRESS } from "./symbols.js";
   
   export default {
     name: "ScrollShow",
@@ -97,7 +102,7 @@
         [ACTIVE_INDEX]: computed(() => this.activeIndex),
         [PROGRESS]: computed(() => this.progress),
         [TRIGGERS]: computed(() => this.triggers),
-        [GOTO]: (index) => this.goto(index)
+        [SCROLLTO]: (index) => this.scrollTo(index)
       };
     },
     computed: {
@@ -171,15 +176,16 @@
         });
       },
       // Navigated to another scene programmatically (dots use this)
-      goto(index) {
+      scrollTo(index) {
         // const title = document.getElementById(this.titleId(index));
         this.controller.scrollTo(this.triggers[index].scene);
-        this.$emit("sceneNavigation", index);
+        this.$emit("scrollTo", index);
       },
       resize() {
         // Update window height (causes properties for heights to recalculate)
         this.triggers.forEach(trigger => trigger.updateHeight());
         this.mainScene.duration(this.duration);
+        this.$emit("afterResize");
       },
       initialize() {
         const { duration } = this;
@@ -223,21 +229,25 @@
           .on("enter", ({ scrollDirection }) => {
             this.active = true;
             this.scrollDirection = scrollDirection;
+            this.$emit("enter", { scrollDirection });
           })
           .on("start", ({ scrollDirection }) => {
             // Scene ended above
             if (scrollDirection === "REVERSE") {
               this.active = false;
               this.scrollDirection = scrollDirection;
+              this.$emit("exit", { scrollDirection });
             }
           })
-          .on("end", ({ state }) => {
+          .on("end", ({ state, scrollDirection }) => {
             // Below the scene
             if (state === "AFTER") {
               this.active = false;
+              this.$emit("exit", { scrollDirection });
             }
           })
           .on("progress", (e) => {
+            this.$emit("progress", e);
             if (!this.progressTicking) {
               window.requestAnimationFrame(() => {
                 this.progress = e.progress;
@@ -247,6 +257,8 @@
             }
           })
           .addTo(this.controller);
+        
+        this.$emit("initialized");
       },
     },
     mounted() {
@@ -268,7 +280,5 @@
     position: sticky;
     top: 0px;
     overflow: hidden;
-    // opacity: 0;
   }
-  
 </style>
