@@ -10,6 +10,7 @@
   },
   "scripts": {
     "dev": "vite",
+    "dev:force": "vite --force",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
@@ -27,6 +28,7 @@
   "devDependencies": {
     "@ulu/eslint-config": "^0.0.1",
     "@ulu/frontend": "^0.0.23",
+    "@ulu/utils" : "^0.0.10",
     "@vitejs/plugin-vue": "^5.0.3",
     "eslint": "^8.49.0",
     "eslint-plugin-vue": "^9.17.0",

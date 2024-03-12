@@ -2,7 +2,8 @@
   <ScrollShow 
     class="custom-show" 
     :count="slides.length"
-    :navAriaLabel="(index) => `Goto part ${ index + 1 }`"
+    sceneHeight="200vh"
+    height="50vh"
   >
     <template #default="{ activeIndex }">
 

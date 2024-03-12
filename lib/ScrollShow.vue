@@ -7,11 +7,12 @@
     <!-- 
     The presentation is the sticky element 
     - invisible triggers below are what make up the space on page 
-    - 
     -->
-    <div class="scroll-show__presentation" ref="presentation">
-      
-
+    <div 
+      class="scroll-show__presentation" 
+      ref="presentation"
+      :style="{ height: toPx(resolvedHeight) }"
+    >
       <slot 
         :activeIndex="activeIndex" 
         :progress="progress"
@@ -20,15 +21,22 @@
     <!-- 
       Triggers: Responsible only for taking up space and triggering
       the animations of the sticky slides above
+      - Pull it under the full amount of the presentation
+
+        paddingBottom: toPx(presentationHeight)
      -->
-     <div class="ScrollPoints__triggers" ref="triggers">
+     <div 
+      class="scroll-show__triggers" 
+      ref="triggers"
+      :style="{ 
+        marginTop: `-${ toPx(resolvedHeight) }`,
+      }"
+    >
       <div 
-        class="ScrollPoints__trigger"
+        class="scroll-show__trigger"
         v-for="(trigger, index) in triggers"
         :key="index"
-        :style="{
-          height: `${ trigger.height }px`
-        }"
+        :style="{ height: toPx(trigger.height) }"
         :ref="(el) => { trigger.element = el }"
       ></div>
     </div>
@@ -40,6 +48,7 @@
   import * as ScrollMagic from "scrollmagic";
   import { debounce } from "@ulu/utils/performance.js";
   import { windowHeight } from "@ulu/utils/browser/dom.js";
+  import { separateCssUnit } from "@ulu/utils/string.js";
   import { ACTIVE_INDEX, TRIGGERS, GOTO, PROGRESS } from "./symbols.js";
   
   export default {
@@ -54,18 +63,23 @@
         required: true
       },
       /**
-       * Incase the it's needed
+       * How long (in unitless pixels) a scene should be
+       * - Optionally pass a function (given scene index)
+       * - Or pass a string that uses [px, %, vh] 
+       *   (with percentages being based on windowHeight)
        */
-      navAriaLabel: {
-        type: Function,
-        default: (_index) => null
-      },
       sceneHeight: {
-        type: Function,
+        type: [Function, String, Number],
         default: () => windowHeight()
       },
-      noNav: Boolean,
-      noProgress: Boolean,
+      /**
+       * Accepts the same options as sceneHeight but for setting 
+       * the height of the presentation
+       */
+      height: {
+        type: [Function, String, Number],
+        default: () => windowHeight()
+      }
     },
     data() {
       return {
@@ -75,6 +89,7 @@
         triggers: this.createTriggers(),
         active: false, // Else it is after
         scrollDirection: null,
+        resolvedHeight: this.resolveHeight(this.height)
       };
     },
     provide() {
@@ -85,12 +100,42 @@
         [GOTO]: (index) => this.goto(index)
       };
     },
+    computed: {
+      totalHeight() {
+        const { triggers } = this;
+        return triggers.reduce((total, t) => total + t.height, 0);
+      }
+    },
     methods: {
+      resolveHeight(val, ...args) {
+        const type = typeof val;
+        if (type === "function") {
+          return val(...args);
+        } else if (type === "number") {
+          return val;
+        } else if (type === "string") {
+          return this.resolveCssUnit(val);
+        } else {
+          throw Error("Unable to resolve height, expected string, number or function:", val)
+        }
+      },
+      resolveCssUnit(val) {
+        const { unit, value } = separateCssUnit(val);
+        const isPerc = ["vh", "%"].includes(unit);
+        if (isPerc) {
+          return windowHeight() * (value / 100);
+        } else {
+          return value;
+        }
+      },
+      toPx(number) {
+        return number + "px";
+      },
       createTriggers() {
-        const { count } = this;
+        const { count, resolveHeight, sceneHeight } = this;
         return Array.from({ length: count }, (_, index) => {
           return {
-            height: this.sceneHeight(index),
+            height: resolveHeight(sceneHeight, index),
             scene: null,
             element: null
           };
@@ -105,6 +150,7 @@
         // what to do if slide is removed
         this.destroy();
         this.triggers = this.createTriggers();
+        this.resolvedHeight = this.resolveHeight(this.height);
         this.$nextTick(() => {
           this.initialize();
         });
@@ -118,11 +164,13 @@
       resize() {
         // Update window height (causes properties for heights to recalculate)
         this.triggers.forEach((trigger, index) => {
-          trigger.height = this.sceneHeight(index);
+          trigger.height = this.getSceneHeight(index);
+          trigger.height = this.resolveHeight(this.sceneHeight(index));
         });
         this.mainScene.duration(this.$refs.container.clientHeight);
       },
       initialize() {
+        const { totalHeight } = this;
         const { container } = this.$refs;
         // Controller for the scenes (attached to window)
         this.controller = new ScrollMagic.Controller();
@@ -136,7 +184,7 @@
           trigger.scene = new ScrollMagic
             .Scene({
               triggerElement: element,
-              triggerHook: 0,
+              triggerHook: 0.5,
               duration: trigger.height
             })
             .on("enter", () => {
@@ -147,20 +195,22 @@
             .addTo(this.controller);
 
         });
+
+        // console.log("this.totalHeight:\n", this.totalHeight);
+        // console.log("container.clientHeight:\n", container.clientHeight);
         
         // Create the main scene, which holds the nested trigger scenes and the 
         // pinned container which holds the actual slide display
         this.mainScene = new ScrollMagic
           .Scene({
             triggerElement: container,
-            // triggerHook: "onLeave", 
-            duration: container.clientHeight
+            triggerHook: 0.5, 
+            duration: totalHeight, // container.clientHeight
           })
           // This will pin the slide visual area and add it to the window controller
           .on("enter", ({ scrollDirection }) => {
             this.active = true;
             this.scrollDirection = scrollDirection;
-            // this.after = true;
           })
           .on("start", ({ scrollDirection }) => {
             // Scene ended above
@@ -205,18 +255,8 @@
   .scroll-show__presentation {
     position: sticky;
     top: 0px;
-    height: 100vh;
+    overflow: hidden;
+    // opacity: 0;
   }
-  .scroll-show__triggers {
-    opacity: 0;
-    visibility: hidden;
-    // Pull it under the full amount of the presentation
-    margin-top: -100vh; 
-    // Additional padding on bottom when using the 
-    // sticky method increases last slide duration
-    // before it disengages
-    padding-bottom: 100vh;
-  }
-  
   
 </style>
