@@ -60,7 +60,7 @@
     name: "ScrollShow",
     props: {
       /**
-       * The amount of slide to create (since they are simulated)
+       * The amount of scenes to create (since they are simulated)
        * - Future could support array (other prop different heights?)
        */
       scenes: {
@@ -166,20 +166,11 @@
         // in case this component is mounted again in the future
         this.controller.destroy(true);
       },
-      update() {
-        // what to do if slide is removed
-        this.destroy();
-        this.triggers = this.createTriggers();
-        this.resolvedHeight = this.resolveHeight(this.height);
-        this.$nextTick(() => {
-          this.initialize();
-        });
-      },
       // Navigated to another scene programmatically (dots use this)
       scrollTo(index) {
         // const title = document.getElementById(this.titleId(index));
         this.controller.scrollTo(this.triggers[index].scene);
-        this.$emit("scrollTo", index);
+        this.$emit("scrollTo", { index });
       },
       resize() {
         // Update window height (causes properties for heights to recalculate)
@@ -207,7 +198,7 @@
             })
             .on("enter", () => {
               this.activeIndex = index;
-              this.$emit("sceneChange", index);
+              this.$emit("sceneChange", { index });
             })
             // Attach handler on scene enter to change the active slide
             .addTo(this.controller);
@@ -260,6 +251,29 @@
         
         this.$emit("initialized");
       },
+      update() {
+        this.destroy();
+        this.triggers = this.createTriggers();
+        this.resolvedHeight = this.resolveHeight(this.height);
+        this.$nextTick(() => {
+          this.initialize();
+        });
+        console.log('Updates');
+      },
+    },
+    watch: {
+      scenes() {
+        console.log('Watch scenes');
+        this.update();
+      },
+      sceneHeight() {
+        console.log('Watch sceneHeight');
+        this.update();
+      },
+      height() {
+        console.log('Watch height');
+        this.update();
+      }
     },
     mounted() {
       this.$nextTick(() => this.initialize());

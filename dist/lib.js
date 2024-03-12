@@ -1,4 +1,4 @@
-import { computed as ie, openBlock as Y, createElementBlock as J, normalizeClass as le, createElementVNode as re, normalizeStyle as te, renderSlot as he, Fragment as pe, renderList as ve, createTextVNode as Se, toDisplayString as Ee } from "vue";
+import { computed as re, openBlock as Y, createElementBlock as J, normalizeClass as le, createElementVNode as ne, normalizeStyle as te, renderSlot as he, Fragment as pe, renderList as ve, createTextVNode as Se, toDisplayString as Ee } from "vue";
 var _e = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {}, me = { exports: {} };
 /*!
  * ScrollMagic v2.0.8 (2020-08-14)
@@ -17,132 +17,132 @@ var _e = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : t
     p.exports = P();
   })(_e, function() {
     var l = function() {
-      r.log(2, "(COMPATIBILITY NOTICE) -> As of ScrollMagic 2.0.0 you need to use 'new ScrollMagic.Controller()' to create a new controller instance. Use 'new ScrollMagic.Scene()' to instance a scene.");
+      n.log(2, "(COMPATIBILITY NOTICE) -> As of ScrollMagic 2.0.0 you need to use 'new ScrollMagic.Controller()' to create a new controller instance. Use 'new ScrollMagic.Scene()' to instance a scene.");
     };
     l.version = "2.0.8", typeof window < "u" && window.addEventListener("mousewheel", void 0);
     var P = "data-scrollmagic-pin-spacer";
     l.Controller = function(o) {
-      var d = "ScrollMagic.Controller", S = "FORWARD", R = "REVERSE", k = "PAUSED", U = T.defaults, i = this, s = r.extend({}, U, o), g = [], E = !1, A = 0, D = k, F = !0, H = 0, u = !0, M, t, c = function() {
-        for (var n in s)
-          U.hasOwnProperty(n) || (f(2, 'WARNING: Unknown option "' + n + '"'), delete s[n]);
-        if (s.container = r.get.elements(s.container)[0], !s.container)
+      var d = "ScrollMagic.Controller", S = "FORWARD", R = "REVERSE", k = "PAUSED", U = T.defaults, r = this, s = n.extend({}, U, o), g = [], E = !1, A = 0, D = k, F = !0, H = 0, u = !0, M, t, c = function() {
+        for (var i in s)
+          U.hasOwnProperty(i) || (f(2, 'WARNING: Unknown option "' + i + '"'), delete s[i]);
+        if (s.container = n.get.elements(s.container)[0], !s.container)
           throw f(1, "ERROR creating object " + d + ": No valid scroll container supplied"), d + " init failed.";
         F = s.container === window || s.container === document.body || !document.body.contains(s.container), F && (s.container = window), H = I(), s.container.addEventListener("resize", q), s.container.addEventListener("scroll", q);
         var y = parseInt(s.refreshInterval, 10);
-        s.refreshInterval = r.type.Number(y) ? y : U.refreshInterval, _(), f(3, "added new " + d + " controller (v" + l.version + ")");
+        s.refreshInterval = n.type.Number(y) ? y : U.refreshInterval, _(), f(3, "added new " + d + " controller (v" + l.version + ")");
       }, _ = function() {
-        s.refreshInterval > 0 && (t = window.setTimeout(ne, s.refreshInterval));
+        s.refreshInterval > 0 && (t = window.setTimeout(ie, s.refreshInterval));
       }, L = function() {
-        return s.vertical ? r.get.scrollTop(s.container) : r.get.scrollLeft(s.container);
+        return s.vertical ? n.get.scrollTop(s.container) : n.get.scrollLeft(s.container);
       }, I = function() {
-        return s.vertical ? r.get.height(s.container) : r.get.width(s.container);
-      }, N = this._setScrollPos = function(n) {
-        s.vertical ? F ? window.scrollTo(r.get.scrollLeft(), n) : s.container.scrollTop = n : F ? window.scrollTo(n, r.get.scrollTop()) : s.container.scrollLeft = n;
-      }, W = function() {
+        return s.vertical ? n.get.height(s.container) : n.get.width(s.container);
+      }, N = this._setScrollPos = function(i) {
+        s.vertical ? F ? window.scrollTo(n.get.scrollLeft(), i) : s.container.scrollTop = i : F ? window.scrollTo(i, n.get.scrollTop()) : s.container.scrollLeft = i;
+      }, V = function() {
         if (u && E) {
-          var n = r.type.Array(E) ? E : g.slice(0);
+          var i = n.type.Array(E) ? E : g.slice(0);
           E = !1;
           var y = A;
-          A = i.scrollPos();
+          A = r.scrollPos();
           var z = A - y;
-          z !== 0 && (D = z > 0 ? S : R), D === R && n.reverse(), n.forEach(function($, G) {
-            f(3, "updating Scene " + (G + 1) + "/" + n.length + " (" + g.length + " total)"), $.update(!0);
-          }), n.length === 0 && s.loglevel >= 3 && f(3, "updating 0 Scenes (nothing added to controller)");
+          z !== 0 && (D = z > 0 ? S : R), D === R && i.reverse(), i.forEach(function($, G) {
+            f(3, "updating Scene " + (G + 1) + "/" + i.length + " (" + g.length + " total)"), $.update(!0);
+          }), i.length === 0 && s.loglevel >= 3 && f(3, "updating 0 Scenes (nothing added to controller)");
         }
       }, X = function() {
-        M = r.rAF(W);
-      }, q = function(n) {
-        f(3, "event fired causing an update:", n.type), n.type == "resize" && (H = I(), D = k), E !== !0 && (E = !0, X());
-      }, ne = function() {
+        M = n.rAF(V);
+      }, q = function(i) {
+        f(3, "event fired causing an update:", i.type), i.type == "resize" && (H = I(), D = k), E !== !0 && (E = !0, X());
+      }, ie = function() {
         if (!F && H != I()) {
-          var n;
+          var i;
           try {
-            n = new Event("resize", {
+            i = new Event("resize", {
               bubbles: !1,
               cancelable: !1
             });
           } catch {
-            n = document.createEvent("Event"), n.initEvent("resize", !1, !1);
+            i = document.createEvent("Event"), i.initEvent("resize", !1, !1);
           }
-          s.container.dispatchEvent(n);
+          s.container.dispatchEvent(i);
         }
         g.forEach(function(y, z) {
           y.refresh();
         }), _();
-      }, f = this._log = function(n, y) {
-        s.loglevel >= n && (Array.prototype.splice.call(arguments, 1, 0, "(" + d + ") ->"), r.log.apply(window, arguments));
+      }, f = this._log = function(i, y) {
+        s.loglevel >= i && (Array.prototype.splice.call(arguments, 1, 0, "(" + d + ") ->"), n.log.apply(window, arguments));
       };
       this._options = s;
-      var m = function(n) {
-        if (n.length <= 1)
-          return n;
-        var y = n.slice(0);
+      var m = function(i) {
+        if (i.length <= 1)
+          return i;
+        var y = i.slice(0);
         return y.sort(function(z, $) {
           return z.scrollOffset() > $.scrollOffset() ? 1 : -1;
         }), y;
       };
-      return this.addScene = function(n) {
-        if (r.type.Array(n))
-          n.forEach(function(z, $) {
-            i.addScene(z);
+      return this.addScene = function(i) {
+        if (n.type.Array(i))
+          i.forEach(function(z, $) {
+            r.addScene(z);
           });
-        else if (n instanceof l.Scene) {
-          if (n.controller() !== i)
-            n.addTo(i);
-          else if (g.indexOf(n) < 0) {
-            g.push(n), g = m(g), n.on("shift.controller_sort", function() {
+        else if (i instanceof l.Scene) {
+          if (i.controller() !== r)
+            i.addTo(r);
+          else if (g.indexOf(i) < 0) {
+            g.push(i), g = m(g), i.on("shift.controller_sort", function() {
               g = m(g);
             });
             for (var y in s.globalSceneOptions)
-              n[y] && n[y].call(n, s.globalSceneOptions[y]);
+              i[y] && i[y].call(i, s.globalSceneOptions[y]);
             f(3, "adding Scene (now " + g.length + " total)");
           }
         } else
           f(1, "ERROR: invalid argument supplied for '.addScene()'");
-        return i;
-      }, this.removeScene = function(n) {
-        if (r.type.Array(n))
-          n.forEach(function(z, $) {
-            i.removeScene(z);
+        return r;
+      }, this.removeScene = function(i) {
+        if (n.type.Array(i))
+          i.forEach(function(z, $) {
+            r.removeScene(z);
           });
         else {
-          var y = g.indexOf(n);
-          y > -1 && (n.off("shift.controller_sort"), g.splice(y, 1), f(3, "removing Scene (now " + g.length + " left)"), n.remove());
+          var y = g.indexOf(i);
+          y > -1 && (i.off("shift.controller_sort"), g.splice(y, 1), f(3, "removing Scene (now " + g.length + " left)"), i.remove());
         }
-        return i;
-      }, this.updateScene = function(n, y) {
-        return r.type.Array(n) ? n.forEach(function(z, $) {
-          i.updateScene(z, y);
-        }) : y ? n.update(!0) : E !== !0 && n instanceof l.Scene && (E = E || [], E.indexOf(n) == -1 && E.push(n), E = m(E), X()), i;
-      }, this.update = function(n) {
+        return r;
+      }, this.updateScene = function(i, y) {
+        return n.type.Array(i) ? i.forEach(function(z, $) {
+          r.updateScene(z, y);
+        }) : y ? i.update(!0) : E !== !0 && i instanceof l.Scene && (E = E || [], E.indexOf(i) == -1 && E.push(i), E = m(E), X()), r;
+      }, this.update = function(i) {
         return q({
           type: "resize"
-        }), n && W(), i;
-      }, this.scrollTo = function(n, y) {
-        if (r.type.Number(n))
-          N.call(s.container, n, y);
-        else if (n instanceof l.Scene)
-          n.controller() === i ? i.scrollTo(n.scrollOffset(), y) : f(2, "scrollTo(): The supplied scene does not belong to this controller. Scroll cancelled.", n);
-        else if (r.type.Function(n))
-          N = n;
+        }), i && V(), r;
+      }, this.scrollTo = function(i, y) {
+        if (n.type.Number(i))
+          N.call(s.container, i, y);
+        else if (i instanceof l.Scene)
+          i.controller() === r ? r.scrollTo(i.scrollOffset(), y) : f(2, "scrollTo(): The supplied scene does not belong to this controller. Scroll cancelled.", i);
+        else if (n.type.Function(i))
+          N = i;
         else {
-          var z = r.get.elements(n)[0];
+          var z = n.get.elements(i)[0];
           if (z) {
             for (; z.parentNode.hasAttribute(P); )
               z = z.parentNode;
-            var $ = s.vertical ? "top" : "left", G = r.get.offset(s.container), K = r.get.offset(z);
-            F || (G[$] -= i.scrollPos()), i.scrollTo(K[$] - G[$], y);
+            var $ = s.vertical ? "top" : "left", G = n.get.offset(s.container), K = n.get.offset(z);
+            F || (G[$] -= r.scrollPos()), r.scrollTo(K[$] - G[$], y);
           } else
-            f(2, "scrollTo(): The supplied argument is invalid. Scroll cancelled.", n);
+            f(2, "scrollTo(): The supplied argument is invalid. Scroll cancelled.", i);
         }
-        return i;
-      }, this.scrollPos = function(n) {
+        return r;
+      }, this.scrollPos = function(i) {
         if (arguments.length)
-          r.type.Function(n) ? L = n : f(2, "Provided value for method 'scrollPos' is not a function. To change the current scroll position use 'scrollTo()'.");
+          n.type.Function(i) ? L = i : f(2, "Provided value for method 'scrollPos' is not a function. To change the current scroll position use 'scrollTo()'.");
         else
-          return L.call(i);
-        return i;
-      }, this.info = function(n) {
+          return L.call(r);
+        return r;
+      }, this.info = function(i) {
         var y = {
           size: H,
           // contains height or width (in regard to orientation);
@@ -153,30 +153,30 @@ var _e = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : t
           isDocument: F
         };
         if (arguments.length) {
-          if (y[n] !== void 0)
-            return y[n];
-          f(1, 'ERROR: option "' + n + '" is not available');
+          if (y[i] !== void 0)
+            return y[i];
+          f(1, 'ERROR: option "' + i + '" is not available');
           return;
         } else
           return y;
-      }, this.loglevel = function(n) {
+      }, this.loglevel = function(i) {
         if (arguments.length)
-          s.loglevel != n && (s.loglevel = n);
+          s.loglevel != i && (s.loglevel = i);
         else
           return s.loglevel;
-        return i;
-      }, this.enabled = function(n) {
+        return r;
+      }, this.enabled = function(i) {
         if (arguments.length)
-          u != n && (u = !!n, i.updateScene(g, !0));
+          u != i && (u = !!i, r.updateScene(g, !0));
         else
           return u;
-        return i;
-      }, this.destroy = function(n) {
+        return r;
+      }, this.destroy = function(i) {
         window.clearTimeout(t);
         for (var y = g.length; y--; )
-          g[y].destroy(n);
-        return s.container.removeEventListener("resize", q), s.container.removeEventListener("scroll", q), r.cAF(M), f(3, "destroyed " + d + " (reset: " + (n ? "true" : "false") + ")"), null;
-      }, c(), i;
+          g[y].destroy(i);
+        return s.container.removeEventListener("resize", q), s.container.removeEventListener("scroll", q), n.cAF(M), f(3, "destroyed " + d + " (reset: " + (i ? "true" : "false") + ")"), null;
+      }, c(), r;
     };
     var T = {
       defaults: {
@@ -192,107 +192,107 @@ var _e = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : t
     }, l.Controller.extend = function(o) {
       var d = this;
       l.Controller = function() {
-        return d.apply(this, arguments), this.$super = r.extend({}, this), o.apply(this, arguments) || this;
-      }, r.extend(l.Controller, d), l.Controller.prototype = d.prototype, l.Controller.prototype.constructor = l.Controller;
+        return d.apply(this, arguments), this.$super = n.extend({}, this), o.apply(this, arguments) || this;
+      }, n.extend(l.Controller, d), l.Controller.prototype = d.prototype, l.Controller.prototype.constructor = l.Controller;
     }, l.Scene = function(o) {
-      var d = "ScrollMagic.Scene", S = "BEFORE", R = "DURING", k = "AFTER", U = C.defaults, i = this, s = r.extend({}, U, o), g = S, E = 0, A = {
+      var d = "ScrollMagic.Scene", S = "BEFORE", R = "DURING", k = "AFTER", U = C.defaults, r = this, s = n.extend({}, U, o), g = S, E = 0, A = {
         start: 0,
         end: 0
       }, D = 0, F = !0, H, u, M = function() {
         for (var e in s)
           U.hasOwnProperty(e) || (c(2, 'WARNING: Unknown option "' + e + '"'), delete s[e]);
         for (var a in U)
-          ne(a);
+          ie(a);
         X();
       }, t = {};
       this.on = function(e, a) {
-        return r.type.Function(a) ? (e = e.trim().split(" "), e.forEach(function(h) {
+        return n.type.Function(a) ? (e = e.trim().split(" "), e.forEach(function(h) {
           var w = h.split("."), v = w[0], b = w[1];
           v != "*" && (t[v] || (t[v] = []), t[v].push({
             namespace: b || "",
             callback: a
           }));
-        })) : c(1, "ERROR when calling '.on()': Supplied callback for '" + e + "' is not a valid function!"), i;
+        })) : c(1, "ERROR when calling '.on()': Supplied callback for '" + e + "' is not a valid function!"), r;
       }, this.off = function(e, a) {
         return e ? (e = e.trim().split(" "), e.forEach(function(h, w) {
           var v = h.split("."), b = v[0], O = v[1] || "", B = b === "*" ? Object.keys(t) : [b];
-          B.forEach(function(V) {
-            for (var j = t[V] || [], Q = j.length; Q--; ) {
+          B.forEach(function(W) {
+            for (var j = t[W] || [], Q = j.length; Q--; ) {
               var ee = j[Q];
               ee && (O === ee.namespace || O === "*") && (!a || a == ee.callback) && j.splice(Q, 1);
             }
-            j.length || delete t[V];
+            j.length || delete t[W];
           });
-        }), i) : (c(1, "ERROR: Invalid event name supplied."), i);
+        }), r) : (c(1, "ERROR: Invalid event name supplied."), r);
       }, this.trigger = function(e, a) {
         if (e) {
           var h = e.trim().split("."), w = h[0], v = h[1], b = t[w];
           c(3, "event fired:", w, a ? "->" : "", a || ""), b && b.forEach(function(O, B) {
-            (!v || v === O.namespace) && O.callback.call(i, new l.Event(w, O.namespace, i, a));
+            (!v || v === O.namespace) && O.callback.call(r, new l.Event(w, O.namespace, r, a));
           });
         } else
           c(1, "ERROR: Invalid event name supplied.");
-        return i;
-      }, i.on("change.internal", function(e) {
-        e.what !== "loglevel" && e.what !== "tweenChanges" && (e.what === "triggerElement" ? I() : e.what === "reverse" && i.update());
+        return r;
+      }, r.on("change.internal", function(e) {
+        e.what !== "loglevel" && e.what !== "tweenChanges" && (e.what === "triggerElement" ? I() : e.what === "reverse" && r.update());
       }).on("shift.internal", function(e) {
-        _(), i.update();
+        _(), r.update();
       });
       var c = this._log = function(e, a) {
-        s.loglevel >= e && (Array.prototype.splice.call(arguments, 1, 0, "(" + d + ") ->"), r.log.apply(window, arguments));
+        s.loglevel >= e && (Array.prototype.splice.call(arguments, 1, 0, "(" + d + ") ->"), n.log.apply(window, arguments));
       };
       this.addTo = function(e) {
-        return e instanceof l.Controller ? u != e && (u && u.removeScene(i), u = e, X(), L(!0), I(!0), _(), u.info("container").addEventListener("resize", N), e.addScene(i), i.trigger("add", {
+        return e instanceof l.Controller ? u != e && (u && u.removeScene(r), u = e, X(), L(!0), I(!0), _(), u.info("container").addEventListener("resize", N), e.addScene(r), r.trigger("add", {
           controller: u
-        }), c(3, "added " + d + " to controller"), i.update()) : c(1, "ERROR: supplied argument of 'addTo()' is not a valid ScrollMagic Controller"), i;
+        }), c(3, "added " + d + " to controller"), r.update()) : c(1, "ERROR: supplied argument of 'addTo()' is not a valid ScrollMagic Controller"), r;
       }, this.enabled = function(e) {
         if (arguments.length)
-          F != e && (F = !!e, i.update(!0));
+          F != e && (F = !!e, r.update(!0));
         else
           return F;
-        return i;
+        return r;
       }, this.remove = function() {
         if (u) {
           u.info("container").removeEventListener("resize", N);
           var e = u;
-          u = void 0, e.removeScene(i), i.trigger("remove"), c(3, "removed " + d + " from controller");
+          u = void 0, e.removeScene(r), r.trigger("remove"), c(3, "removed " + d + " from controller");
         }
-        return i;
+        return r;
       }, this.destroy = function(e) {
-        return i.trigger("destroy", {
+        return r.trigger("destroy", {
           reset: e
-        }), i.remove(), i.off("*.*"), c(3, "destroyed " + d + " (reset: " + (e ? "true" : "false") + ")"), null;
+        }), r.remove(), r.off("*.*"), c(3, "destroyed " + d + " (reset: " + (e ? "true" : "false") + ")"), null;
       }, this.update = function(e) {
         if (u)
           if (e)
             if (u.enabled() && F) {
               var a = u.info("scrollPos"), h;
-              s.duration > 0 ? h = (a - A.start) / (A.end - A.start) : h = a >= A.start ? 1 : 0, i.trigger("update", {
+              s.duration > 0 ? h = (a - A.start) / (A.end - A.start) : h = a >= A.start ? 1 : 0, r.trigger("update", {
                 startPos: A.start,
                 endPos: A.end,
                 scrollPos: a
-              }), i.progress(h);
+              }), r.progress(h);
             } else
-              f && g === R && n(!0);
+              f && g === R && i(!0);
           else
-            u.updateScene(i, !1);
-        return i;
+            u.updateScene(r, !1);
+        return r;
       }, this.refresh = function() {
-        return L(), I(), i;
+        return L(), I(), r;
       }, this.progress = function(e) {
         if (arguments.length) {
           var a = !1, h = g, w = u ? u.info("scrollDirection") : "PAUSED", v = s.reverse || e >= E;
-          if (s.duration === 0 ? (a = E != e, E = e < 1 && v ? 0 : 1, g = E === 0 ? S : R) : e < 0 && g !== S && v ? (E = 0, g = S, a = !0) : e >= 0 && e < 1 && v ? (E = e, g = R, a = !0) : e >= 1 && g !== k ? (E = 1, g = k, a = !0) : g === R && !v && n(), a) {
+          if (s.duration === 0 ? (a = E != e, E = e < 1 && v ? 0 : 1, g = E === 0 ? S : R) : e < 0 && g !== S && v ? (E = 0, g = S, a = !0) : e >= 0 && e < 1 && v ? (E = e, g = R, a = !0) : e >= 1 && g !== k ? (E = 1, g = k, a = !0) : g === R && !v && i(), a) {
             var b = {
               progress: E,
               state: g,
               scrollDirection: w
-            }, O = g != h, B = function(V) {
-              i.trigger(V, b);
+            }, O = g != h, B = function(W) {
+              r.trigger(W, b);
             };
             O && h !== R && (B("enter"), B(h === S ? "start" : "end")), B("progress"), O && g !== R && (B(g === S ? "start" : "end"), B("leave"));
           }
-          return i;
+          return r;
         } else
           return E;
       };
@@ -303,10 +303,10 @@ var _e = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : t
       }, L = function(e) {
         if (H) {
           var a = "duration";
-          q(a, H.call(i)) && !e && (i.trigger("change", {
+          q(a, H.call(r)) && !e && (r.trigger("change", {
             what: a,
             newval: s[a]
-          }), i.trigger("shift", {
+          }), r.trigger("shift", {
             reason: a
           }));
         }
@@ -315,52 +315,52 @@ var _e = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : t
         if (u && (h || D > 0)) {
           if (h)
             if (h.parentNode) {
-              for (var w = u.info(), v = r.get.offset(w.container), b = w.vertical ? "top" : "left"; h.parentNode.hasAttribute(P); )
+              for (var w = u.info(), v = n.get.offset(w.container), b = w.vertical ? "top" : "left"; h.parentNode.hasAttribute(P); )
                 h = h.parentNode;
-              var O = r.get.offset(h);
+              var O = n.get.offset(h);
               w.isDocument || (v[b] -= u.scrollPos()), a = O[b] - v[b];
             } else
-              c(2, "WARNING: triggerElement was removed from DOM and will be reset to", void 0), i.triggerElement(void 0);
+              c(2, "WARNING: triggerElement was removed from DOM and will be reset to", void 0), r.triggerElement(void 0);
           var B = a != D;
-          D = a, B && !e && i.trigger("shift", {
+          D = a, B && !e && r.trigger("shift", {
             reason: "triggerElementPosition"
           });
         }
       }, N = function(e) {
-        s.triggerHook > 0 && i.trigger("shift", {
+        s.triggerHook > 0 && r.trigger("shift", {
           reason: "containerResize"
         });
-      }, W = r.extend(C.validate, {
+      }, V = n.extend(C.validate, {
         // validation for duration handled internally for reference to private var _durationMethod
         duration: function(e) {
-          if (r.type.String(e) && e.match(/^(\.|\d)*\d+%$/)) {
+          if (n.type.String(e) && e.match(/^(\.|\d)*\d+%$/)) {
             var a = parseFloat(e) / 100;
             e = function() {
               return u ? u.info("size") * a : 0;
             };
           }
-          if (r.type.Function(e)) {
+          if (n.type.Function(e)) {
             H = e;
             try {
-              e = parseFloat(H.call(i));
+              e = parseFloat(H.call(r));
             } catch {
               e = -1;
             }
           }
-          if (e = parseFloat(e), !r.type.Number(e) || e < 0)
+          if (e = parseFloat(e), !n.type.Number(e) || e < 0)
             throw H ? (H = void 0, ['Invalid return value of supplied function for option "duration":', e]) : ['Invalid value for option "duration":', e];
           return e;
         }
       }), X = function(e) {
-        e = arguments.length ? [e] : Object.keys(W), e.forEach(function(a, h) {
+        e = arguments.length ? [e] : Object.keys(V), e.forEach(function(a, h) {
           var w;
-          if (W[a])
+          if (V[a])
             try {
-              w = W[a](s[a]);
+              w = V[a](s[a]);
             } catch (b) {
               w = U[a];
-              var v = r.type.String(b) ? [b] : b;
-              r.type.Array(v) ? (v[0] = "ERROR: " + v[0], v.unshift(1), c.apply(this, v)) : c(1, "ERROR: Problem executing validation callback for option '" + a + "':", b.message);
+              var v = n.type.String(b) ? [b] : b;
+              n.type.Array(v) ? (v[0] = "ERROR: " + v[0], v.unshift(1), c.apply(this, v)) : c(1, "ERROR: Problem executing validation callback for option '" + a + "':", b.message);
             } finally {
               s[a] = w;
             }
@@ -368,18 +368,18 @@ var _e = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : t
       }, q = function(e, a) {
         var h = !1, w = s[e];
         return s[e] != a && (s[e] = a, X(e), h = w != s[e]), h;
-      }, ne = function(e) {
-        i[e] || (i[e] = function(a) {
+      }, ie = function(e) {
+        r[e] || (r[e] = function(a) {
           if (arguments.length)
-            e === "duration" && (H = void 0), q(e, a) && (i.trigger("change", {
+            e === "duration" && (H = void 0), q(e, a) && (r.trigger("change", {
               what: e,
               newval: s[e]
-            }), C.shifts.indexOf(e) > -1 && i.trigger("shift", {
+            }), C.shifts.indexOf(e) > -1 && r.trigger("shift", {
               reason: e
             }));
           else
             return s[e];
-          return i;
+          return r;
         });
       };
       this.controller = function() {
@@ -390,28 +390,28 @@ var _e = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : t
         return A.start;
       }, this.triggerPosition = function() {
         var e = s.offset;
-        return u && (s.triggerElement ? e += D : e += u.info("size") * i.triggerHook()), e;
+        return u && (s.triggerElement ? e += D : e += u.info("size") * r.triggerHook()), e;
       };
       var f, m;
-      i.on("shift.internal", function(e) {
+      r.on("shift.internal", function(e) {
         var a = e.reason === "duration";
-        (g === k && a || g === R && s.duration === 0) && n(), a && y();
+        (g === k && a || g === R && s.duration === 0) && i(), a && y();
       }).on("progress.internal", function(e) {
-        n();
+        i();
       }).on("add.internal", function(e) {
         y();
       }).on("destroy.internal", function(e) {
-        i.removePin(e.reset);
+        r.removePin(e.reset);
       });
-      var n = function(e) {
+      var i = function(e) {
         if (f && u) {
           var a = u.info(), h = m.spacer.firstChild;
           if (!e && g === R) {
-            r.css(h, "position") != "fixed" && (r.css(h, {
+            n.css(h, "position") != "fixed" && (n.css(h, {
               position: "fixed"
             }), y());
-            var w = r.get.offset(m.spacer, !0), v = s.reverse || s.duration === 0 ? a.scrollPos - A.start : Math.round(E * s.duration * 10) / 10;
-            w[a.vertical ? "top" : "left"] += v, r.css(m.spacer.firstChild, {
+            var w = n.get.offset(m.spacer, !0), v = s.reverse || s.duration === 0 ? a.scrollPos - A.start : Math.round(E * s.duration * 10) / 10;
+            w[a.vertical ? "top" : "left"] += v, n.css(m.spacer.firstChild, {
               top: w.top,
               left: w.left
             });
@@ -420,30 +420,30 @@ var _e = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : t
               position: m.inFlow ? "relative" : "absolute",
               top: 0,
               left: 0
-            }, O = r.css(h, "position") != b.position;
-            m.pushFollowers ? s.duration > 0 && (g === k && parseFloat(r.css(m.spacer, "padding-top")) === 0 || g === S && parseFloat(r.css(m.spacer, "padding-bottom")) === 0) && (O = !0) : b[a.vertical ? "top" : "left"] = s.duration * E, r.css(h, b), O && y();
+            }, O = n.css(h, "position") != b.position;
+            m.pushFollowers ? s.duration > 0 && (g === k && parseFloat(n.css(m.spacer, "padding-top")) === 0 || g === S && parseFloat(n.css(m.spacer, "padding-bottom")) === 0) && (O = !0) : b[a.vertical ? "top" : "left"] = s.duration * E, n.css(h, b), O && y();
           }
         }
       }, y = function() {
         if (f && u && m.inFlow) {
-          var e = g === R, a = u.info("vertical"), h = m.spacer.firstChild, w = r.isMarginCollapseType(r.css(m.spacer, "display")), v = {};
-          m.relSize.width || m.relSize.autoFullWidth ? e ? r.css(f, {
-            width: r.get.width(m.spacer)
-          }) : r.css(f, {
+          var e = g === R, a = u.info("vertical"), h = m.spacer.firstChild, w = n.isMarginCollapseType(n.css(m.spacer, "display")), v = {};
+          m.relSize.width || m.relSize.autoFullWidth ? e ? n.css(f, {
+            width: n.get.width(m.spacer)
+          }) : n.css(f, {
             width: "100%"
-          }) : (v["min-width"] = r.get.width(a ? f : h, !0, !0), v.width = e ? v["min-width"] : "auto"), m.relSize.height ? e ? r.css(f, {
-            height: r.get.height(m.spacer) - (m.pushFollowers ? s.duration : 0)
-          }) : r.css(f, {
+          }) : (v["min-width"] = n.get.width(a ? f : h, !0, !0), v.width = e ? v["min-width"] : "auto"), m.relSize.height ? e ? n.css(f, {
+            height: n.get.height(m.spacer) - (m.pushFollowers ? s.duration : 0)
+          }) : n.css(f, {
             height: "100%"
-          }) : (v["min-height"] = r.get.height(a ? h : f, !0, !w), v.height = e ? v["min-height"] : "auto"), m.pushFollowers && (v["padding" + (a ? "Top" : "Left")] = s.duration * E, v["padding" + (a ? "Bottom" : "Right")] = s.duration * (1 - E)), r.css(m.spacer, v);
+          }) : (v["min-height"] = n.get.height(a ? h : f, !0, !w), v.height = e ? v["min-height"] : "auto"), m.pushFollowers && (v["padding" + (a ? "Top" : "Left")] = s.duration * E, v["padding" + (a ? "Bottom" : "Right")] = s.duration * (1 - E)), n.css(m.spacer, v);
         }
       }, z = function() {
-        u && f && g === R && !u.info("isDocument") && n();
+        u && f && g === R && !u.info("isDocument") && i();
       }, $ = function() {
         u && f && // well, duh
         g === R && // element in pinned state?
         // is width or height relatively sized, but not in relation to body? then we need to recalc.
-        ((m.relSize.width || m.relSize.autoFullWidth) && r.get.width(window) != r.get.width(m.spacer.parentNode) || m.relSize.height && r.get.height(window) != r.get.height(m.spacer.parentNode)) && y();
+        ((m.relSize.width || m.relSize.autoFullWidth) && n.get.width(window) != n.get.width(m.spacer.parentNode) || m.relSize.height && n.get.height(window) != n.get.height(m.spacer.parentNode)) && y();
       }, G = function(e) {
         u && f && g === R && !u.info("isDocument") && (e.preventDefault(), u._setScrollPos(u.info("scrollPos") - ((e.wheelDelta || e[u.info("vertical") ? "wheelDeltaY" : "wheelDeltaX"]) / 3 || -e.detail * 30)));
       };
@@ -452,36 +452,36 @@ var _e = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : t
           pushFollowers: !0,
           spacerClass: "scrollmagic-pin-spacer"
         }, w = a && a.hasOwnProperty("pushFollowers");
-        if (a = r.extend({}, h, a), e = r.get.elements(e)[0], e) {
-          if (r.css(e, "position") === "fixed")
-            return c(1, "ERROR calling method 'setPin()': Pin does not work with elements that are positioned 'fixed'."), i;
+        if (a = n.extend({}, h, a), e = n.get.elements(e)[0], e) {
+          if (n.css(e, "position") === "fixed")
+            return c(1, "ERROR calling method 'setPin()': Pin does not work with elements that are positioned 'fixed'."), r;
         } else
-          return c(1, "ERROR calling method 'setPin()': Invalid pin element supplied."), i;
+          return c(1, "ERROR calling method 'setPin()': Invalid pin element supplied."), r;
         if (f) {
           if (f === e)
-            return i;
-          i.removePin();
+            return r;
+          r.removePin();
         }
         f = e;
         var v = f.parentNode.style.display, b = ["top", "left", "bottom", "right", "margin", "marginLeft", "marginRight", "marginTop", "marginBottom"];
         f.parentNode.style.display = "none";
-        var O = r.css(f, "position") != "absolute", B = r.css(f, b.concat(["display"])), V = r.css(f, ["width", "height"]);
+        var O = n.css(f, "position") != "absolute", B = n.css(f, b.concat(["display"])), W = n.css(f, ["width", "height"]);
         f.parentNode.style.display = v, !O && a.pushFollowers && (c(2, "WARNING: If the pinned element is positioned absolutely pushFollowers will be disabled."), a.pushFollowers = !1), window.setTimeout(function() {
           f && s.duration === 0 && w && a.pushFollowers && c(2, "WARNING: pushFollowers =", !0, "has no effect, when scene duration is 0.");
         }, 0);
-        var j = f.parentNode.insertBefore(document.createElement("div"), f), Q = r.extend(B, {
+        var j = f.parentNode.insertBefore(document.createElement("div"), f), Q = n.extend(B, {
           position: O ? "relative" : "absolute",
           boxSizing: "content-box",
           mozBoxSizing: "content-box",
           webkitBoxSizing: "content-box"
         });
-        if (O || r.extend(Q, r.css(f, ["width", "height"])), r.css(j, Q), j.setAttribute(P, ""), r.addClass(j, a.spacerClass), m = {
+        if (O || n.extend(Q, n.css(f, ["width", "height"])), n.css(j, Q), j.setAttribute(P, ""), n.addClass(j, a.spacerClass), m = {
           spacer: j,
           relSize: {
             // save if size is defined using % values. if so, handle spacer resize differently...
-            width: V.width.slice(-1) === "%",
-            height: V.height.slice(-1) === "%",
-            autoFullWidth: V.width === "auto" && O && r.isMarginCollapseType(B.display)
+            width: W.width.slice(-1) === "%",
+            height: W.height.slice(-1) === "%",
+            autoFullWidth: W.width === "auto" && O && n.isMarginCollapseType(B.display)
           },
           pushFollowers: a.pushFollowers,
           inFlow: O
@@ -493,54 +493,54 @@ var _e = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : t
             f.___origStyle[ge] = ee[ge] || "";
           });
         }
-        return m.relSize.width && r.css(j, {
-          width: V.width
-        }), m.relSize.height && r.css(j, {
-          height: V.height
-        }), j.appendChild(f), r.css(f, {
+        return m.relSize.width && n.css(j, {
+          width: W.width
+        }), m.relSize.height && n.css(j, {
+          height: W.height
+        }), j.appendChild(f), n.css(f, {
           position: O ? "relative" : "absolute",
           margin: "auto",
           top: "auto",
           left: "auto",
           bottom: "auto",
           right: "auto"
-        }), (m.relSize.width || m.relSize.autoFullWidth) && r.css(f, {
+        }), (m.relSize.width || m.relSize.autoFullWidth) && n.css(f, {
           boxSizing: "border-box",
           mozBoxSizing: "border-box",
           webkitBoxSizing: "border-box"
-        }), window.addEventListener("scroll", z), window.addEventListener("resize", z), window.addEventListener("resize", $), f.addEventListener("mousewheel", G), f.addEventListener("DOMMouseScroll", G), c(3, "added pin"), n(), i;
+        }), window.addEventListener("scroll", z), window.addEventListener("resize", z), window.addEventListener("resize", $), f.addEventListener("mousewheel", G), f.addEventListener("DOMMouseScroll", G), c(3, "added pin"), i(), r;
       }, this.removePin = function(e) {
         if (f) {
-          if (g === R && n(!0), e || !u) {
+          if (g === R && i(!0), e || !u) {
             var a = m.spacer.firstChild;
             if (a.hasAttribute(P)) {
               var h = m.spacer.style, w = ["margin", "marginLeft", "marginRight", "marginTop", "marginBottom"], v = {};
               w.forEach(function(b) {
                 v[b] = h[b] || "";
-              }), r.css(a, v);
+              }), n.css(a, v);
             }
-            m.spacer.parentNode.insertBefore(a, m.spacer), m.spacer.parentNode.removeChild(m.spacer), f.parentNode.hasAttribute(P) || (r.css(f, f.___origStyle), delete f.___origStyle);
+            m.spacer.parentNode.insertBefore(a, m.spacer), m.spacer.parentNode.removeChild(m.spacer), f.parentNode.hasAttribute(P) || (n.css(f, f.___origStyle), delete f.___origStyle);
           }
           window.removeEventListener("scroll", z), window.removeEventListener("resize", z), window.removeEventListener("resize", $), f.removeEventListener("mousewheel", G), f.removeEventListener("DOMMouseScroll", G), f = void 0, c(3, "removed pin (reset: " + (e ? "true" : "false") + ")");
         }
-        return i;
+        return r;
       };
       var K, Z = [];
-      return i.on("destroy.internal", function(e) {
-        i.removeClassToggle(e.reset);
+      return r.on("destroy.internal", function(e) {
+        r.removeClassToggle(e.reset);
       }), this.setClassToggle = function(e, a) {
-        var h = r.get.elements(e);
-        return h.length === 0 || !r.type.String(a) ? (c(1, "ERROR calling method 'setClassToggle()': Invalid " + (h.length === 0 ? "element" : "classes") + " supplied."), i) : (Z.length > 0 && i.removeClassToggle(), K = a, Z = h, i.on("enter.internal_class leave.internal_class", function(w) {
-          var v = w.type === "enter" ? r.addClass : r.removeClass;
+        var h = n.get.elements(e);
+        return h.length === 0 || !n.type.String(a) ? (c(1, "ERROR calling method 'setClassToggle()': Invalid " + (h.length === 0 ? "element" : "classes") + " supplied."), r) : (Z.length > 0 && r.removeClassToggle(), K = a, Z = h, r.on("enter.internal_class leave.internal_class", function(w) {
+          var v = w.type === "enter" ? n.addClass : n.removeClass;
           Z.forEach(function(b, O) {
             v(b, K);
           });
-        }), i);
+        }), r);
       }, this.removeClassToggle = function(e) {
         return e && Z.forEach(function(a, h) {
-          r.removeClass(a, K);
-        }), i.off("start.internal_class end.internal_class"), K = void 0, Z = [], i;
-      }, M(), i;
+          n.removeClass(a, K);
+        }), r.off("start.internal_class end.internal_class"), K = void 0, Z = [], r;
+      }, M(), r;
     };
     var C = {
       defaults: {
@@ -553,13 +553,13 @@ var _e = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : t
       },
       validate: {
         offset: function(o) {
-          if (o = parseFloat(o), !r.type.Number(o))
+          if (o = parseFloat(o), !n.type.Number(o))
             throw ['Invalid value for option "offset":', o];
           return o;
         },
         triggerElement: function(o) {
           if (o = o || void 0, o) {
-            var d = r.get.elements(o)[0];
+            var d = n.get.elements(o)[0];
             if (d && d.parentNode)
               o = d;
             else
@@ -573,7 +573,7 @@ var _e = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : t
             onEnter: 1,
             onLeave: 0
           };
-          if (r.type.Number(o))
+          if (n.type.Number(o))
             o = Math.max(0, Math.min(parseFloat(o), 1));
           else if (o in d)
             o = d[o];
@@ -585,7 +585,7 @@ var _e = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : t
           return !!o;
         },
         loglevel: function(o) {
-          if (o = parseInt(o), !r.type.Number(o) || o < 0 || o > 3)
+          if (o = parseInt(o), !n.type.Number(o) || o < 0 || o > 3)
             throw ['Invalid value for option "loglevel":', o];
           return o;
         }
@@ -599,15 +599,15 @@ var _e = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : t
     }, l.Scene.extend = function(o) {
       var d = this;
       l.Scene = function() {
-        return d.apply(this, arguments), this.$super = r.extend({}, this), o.apply(this, arguments) || this;
-      }, r.extend(l.Scene, d), l.Scene.prototype = d.prototype, l.Scene.prototype.constructor = l.Scene;
+        return d.apply(this, arguments), this.$super = n.extend({}, this), o.apply(this, arguments) || this;
+      }, n.extend(l.Scene, d), l.Scene.prototype = d.prototype, l.Scene.prototype.constructor = l.Scene;
     }, l.Event = function(o, d, S, R) {
       R = R || {};
       for (var k in R)
         this[k] = R[k];
       return this.type = o, this.target = this.currentTarget = S, this.namespace = d || "", this.timeStamp = this.timestamp = Date.now(), this;
     };
-    var r = l._util = function(o) {
+    var n = l._util = function(o) {
       var d = {}, S, R = function(t) {
         return parseFloat(t) || 0;
       }, k = function(t) {
@@ -624,7 +624,7 @@ var _e = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : t
           I += t === "Height" ? R(N.marginTop) + R(N.marginBottom) : R(N.marginLeft) + R(N.marginRight);
         }
         return I;
-      }, i = function(t) {
+      }, r = function(t) {
         return t.replace(/^[^a-z]+([a-z])/g, "$1").replace(/-([a-z])/g, function(c) {
           return c[1].toUpperCase();
         });
@@ -718,16 +718,16 @@ var _e = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : t
         c && (t.classList ? t.classList.remove(c) : t.className = t.className.replace(new RegExp("(^|\\b)" + c.split(" ").join("|") + "(\\b|$)", "gi"), " "));
       }, d.css = function(t, c) {
         if (u.String(c))
-          return k(t)[i(c)];
+          return k(t)[r(c)];
         if (u.Array(c)) {
           var _ = {}, L = k(t);
-          return c.forEach(function(W, X) {
-            _[W] = L[i(W)];
+          return c.forEach(function(V, X) {
+            _[V] = L[r(V)];
           }), _;
         } else
           for (var I in c) {
             var N = c[I];
-            N == parseFloat(N) && (N += "px"), t.style[i(I)] = N;
+            N == parseFloat(N) && (N += "px"), t.style[r(I)] = N;
           }
       }, d;
     }(window || {});
@@ -750,10 +750,10 @@ var oe = me.exports;
 function we(p, x, l, P) {
   var T;
   return function() {
-    var r = P || this, o = arguments, d = function() {
-      T = null, l || p.apply(r, o);
+    var n = P || this, o = arguments, d = function() {
+      T = null, l || p.apply(n, o);
     }, S = l && !T;
-    clearTimeout(T), T = setTimeout(d, x), S && p.apply(r, o);
+    clearTimeout(T), T = setTimeout(d, x), S && p.apply(n, o);
   };
 }
 function se() {
@@ -782,7 +782,7 @@ const ae = Symbol(), ce = Symbol(), ue = Symbol(), fe = Symbol(), Le = /* @__PUR
   name: "ScrollShow",
   props: {
     /**
-     * The amount of slide to create (since they are simulated)
+     * The amount of scenes to create (since they are simulated)
      * - Future could support array (other prop different heights?)
      */
     scenes: {
@@ -822,9 +822,9 @@ const ae = Symbol(), ce = Symbol(), ue = Symbol(), fe = Symbol(), Le = /* @__PUR
   },
   provide() {
     return {
-      [ae]: ie(() => this.activeIndex),
-      [ue]: ie(() => this.progress),
-      [ce]: ie(() => this.triggers),
+      [ae]: re(() => this.activeIndex),
+      [ue]: re(() => this.progress),
+      [ce]: re(() => this.triggers),
       [fe]: (p) => this.scrollTo(p)
     };
   },
@@ -859,27 +859,22 @@ const ae = Symbol(), ce = Symbol(), ue = Symbol(), fe = Symbol(), Le = /* @__PUR
     createTriggers() {
       const { scenes: p, resolveHeight: x, sceneHeight: l } = this, P = typeof p == "number" ? { length: p } : p;
       return Array.from(P, (T, C) => {
-        const r = {
+        const n = {
           height: 0,
           scene: null,
           element: null
         }, o = () => {
-          r.height = x(T ?? l, C);
+          n.height = x(T ?? l, C);
         };
-        return r.updateHeight = o, r.updateHeight(), r;
+        return n.updateHeight = o, n.updateHeight(), n;
       });
     },
     destroy() {
       this.controller.destroy(!0);
     },
-    update() {
-      this.destroy(), this.triggers = this.createTriggers(), this.resolvedHeight = this.resolveHeight(this.height), this.$nextTick(() => {
-        this.initialize();
-      });
-    },
     // Navigated to another scene programmatically (dots use this)
     scrollTo(p) {
-      this.controller.scrollTo(this.triggers[p].scene), this.$emit("scrollTo", p);
+      this.controller.scrollTo(this.triggers[p].scene), this.$emit("scrollTo", { index: p });
     },
     resize() {
       this.triggers.forEach((p) => p.updateHeight()), this.mainScene.duration(this.duration), this.$emit("afterResize");
@@ -893,7 +888,7 @@ const ae = Symbol(), ce = Symbol(), ue = Symbol(), fe = Symbol(), Le = /* @__PUR
           triggerHook: 0.5,
           duration: l.height
         }).on("enter", () => {
-          this.activeIndex = P, this.$emit("sceneChange", P);
+          this.activeIndex = P, this.$emit("sceneChange", { index: P });
         }).addTo(this.controller);
       }), this.mainScene = new oe.Scene({
         triggerElement: x,
@@ -910,6 +905,22 @@ const ae = Symbol(), ce = Symbol(), ue = Symbol(), fe = Symbol(), Le = /* @__PUR
           this.progress = l.progress, this.progressTicking = !1;
         }), this.progressTicking = !0);
       }).addTo(this.controller), this.$emit("initialized");
+    },
+    update() {
+      this.destroy(), this.triggers = this.createTriggers(), this.resolvedHeight = this.resolveHeight(this.height), this.$nextTick(() => {
+        this.initialize();
+      }), console.log("Updates");
+    }
+  },
+  watch: {
+    scenes() {
+      console.log("Watch scenes"), this.update();
+    },
+    sceneHeight() {
+      console.log("Watch sceneHeight"), this.update();
+    },
+    height() {
+      console.log("Watch height"), this.update();
     }
   },
   mounted() {
@@ -924,7 +935,7 @@ function Te(p, x, l, P, T, C) {
     class: le(["scroll-show", { "scroll-show--active": T.active }]),
     ref: "container"
   }, [
-    re("div", {
+    ne("div", {
       class: "scroll-show__presentation",
       ref: "presentation",
       style: te({ height: C.toPx(T.resolvedHeight) })
@@ -939,20 +950,20 @@ function Te(p, x, l, P, T, C) {
         resolvedHeight: T.resolvedHeight
       })
     ], 4),
-    re("div", {
+    ne("div", {
       class: "scroll-show__triggers",
       ref: "triggers",
       style: te({
         marginTop: `-${C.toPx(T.resolvedHeight)}`
       })
     }, [
-      (Y(!0), J(pe, null, ve(T.triggers, (r, o) => (Y(), J("div", {
+      (Y(!0), J(pe, null, ve(T.triggers, (n, o) => (Y(), J("div", {
         class: "scroll-show__trigger",
         key: o,
-        style: te({ height: C.toPx(r.height) }),
+        style: te({ height: C.toPx(n.height) }),
         ref_for: !0,
         ref: (d) => {
-          r.element = d;
+          n.element = d;
         }
       }, null, 4))), 128))
     ], 4)
@@ -968,11 +979,11 @@ const Ne = /* @__PURE__ */ de(Re, [["render", Te]]), Ce = {
 }, Oe = { class: "scroll-show__nav" }, xe = ["onClick", "aria-label"];
 function Pe(p, x, l, P, T, C) {
   return Y(), J("ul", Oe, [
-    (Y(!0), J(pe, null, ve(C.triggers, (r, o) => (Y(), J("li", {
+    (Y(!0), J(pe, null, ve(C.triggers, (n, o) => (Y(), J("li", {
       class: le(["scroll-show__nav-item", { "is-active": o === C.activeIndex }]),
       key: o
     }, [
-      re("button", {
+      ne("button", {
         onClick: (d) => C.scrollTo(o),
         class: le(["scroll-show__nav-button", { "is-active": o === C.activeIndex }]),
         "aria-label": `goto part ${o}`
@@ -995,7 +1006,7 @@ const De = /* @__PURE__ */ de(Ce, [["render", Pe]]), Ae = {
 }, ze = { class: "scroll-show__progress" };
 function Fe(p, x, l, P, T, C) {
   return Y(), J("div", ze, [
-    re("div", {
+    ne("div", {
       class: "scroll-show__progress-bar",
       style: te({ transform: `scaleX(${C.progress})` })
     }, null, 4)

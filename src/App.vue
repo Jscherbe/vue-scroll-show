@@ -6,13 +6,13 @@
 
   <ScrollShow 
     class="custom-show" 
-    :scenes="slides.length"
+    :scenes="changingSlides.length"
     sceneHeight="200vh"
     height="100vh"
     v-slot="{ activeIndex }"
   >
     <ScrollShowNav/>
-    <SlideShow :slides="slides" :activeIndex="activeIndex"/>
+    <SlideShow :slides="changingSlides" :activeIndex="activeIndex"/>
     <ScrollShowProgress/>
   </ScrollShow>
 
@@ -37,12 +37,18 @@
 </template>
 
 <script setup>
+  import { ref } from "vue";
   import ScrollShow from "../lib/ScrollShow.vue";
   import ScrollShowNav from "../lib/ScrollShowNav.vue";
   import ScrollShowProgress from "../lib/ScrollShowProgress.vue";
   import SlideShow from "./SlideShow.vue";
   import AppSpacer from "./AppSpacer.vue";
   import { slides } from "./slides.js";
+  const changingSlides = ref([ ...slides ]);
+  setTimeout(() => {
+    console.log("popped");
+    changingSlides.value.shift();
+  }, 5000);
 </script>
 
 <style lang="scss">
