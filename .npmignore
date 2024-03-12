@@ -1,8 +1,11 @@
 /src
 /public
+/docs
+/reference
 index.html
 project.todo
 .eslintrc.cjs
 jsconfig.json
 .prettierrc
 vite.config.js
+vite.config.demo.js
