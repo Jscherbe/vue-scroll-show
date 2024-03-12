@@ -58,8 +58,8 @@
        * The amount of slide to create (since they are simulated)
        * - Future could support array (other prop different heights?)
        */
-      count: {
-        type: Number,
+      scenes: {
+        type: [Number, Array],
         required: true
       },
       /**
@@ -104,6 +104,14 @@
       totalHeight() {
         const { triggers } = this;
         return triggers.reduce((total, t) => total + t.height, 0);
+      },
+      duration() {
+        const { totalHeight, resolvedHeight } = this;
+        // Removing the height of the screen so the screen can end when the main
+        // scene starts scrolling up (ending one totalHeight early)
+        // This makes the progress = to the length of the sticky scene instead of 
+        // based just on when it enters / exits the viewport (ends up with scrolling progress)
+        return totalHeight - resolvedHeight;
       }
     },
     methods: {
@@ -116,7 +124,7 @@
         } else if (type === "string") {
           return this.resolveCssUnit(val);
         } else {
-          throw Error("Unable to resolve height, expected string, number or function:", val)
+          throw Error("Unable to resolve height, expected string, number or function:", val);
         }
       },
       resolveCssUnit(val) {
@@ -132,13 +140,20 @@
         return number + "px";
       },
       createTriggers() {
-        const { count, resolveHeight, sceneHeight } = this;
-        return Array.from({ length: count }, (_, index) => {
-          return {
-            height: resolveHeight(sceneHeight, index),
+        const { scenes, resolveHeight, sceneHeight } = this;
+        const array = typeof scenes === "number" ? { length: scenes } : scenes;
+        return Array.from(array, (custom, index) => {
+          const trigger = {
+            height: 0,
             scene: null,
             element: null
           };
+          const updateHeight = () => {
+            trigger.height = resolveHeight(custom ?? sceneHeight, index);
+          };
+          trigger.updateHeight = updateHeight;
+          trigger.updateHeight();
+          return trigger;
         });
       },
       destroy() {
@@ -163,14 +178,11 @@
       },
       resize() {
         // Update window height (causes properties for heights to recalculate)
-        this.triggers.forEach((trigger, index) => {
-          trigger.height = this.getSceneHeight(index);
-          trigger.height = this.resolveHeight(this.sceneHeight(index));
-        });
-        this.mainScene.duration(this.$refs.container.clientHeight);
+        this.triggers.forEach(trigger => trigger.updateHeight());
+        this.mainScene.duration(this.duration);
       },
       initialize() {
-        const { totalHeight } = this;
+        const { duration } = this;
         const { container } = this.$refs;
         // Controller for the scenes (attached to window)
         this.controller = new ScrollMagic.Controller();
@@ -204,8 +216,8 @@
         this.mainScene = new ScrollMagic
           .Scene({
             triggerElement: container,
-            triggerHook: 0.5, 
-            duration: totalHeight, // container.clientHeight
+            triggerHook: 0, 
+            duration
           })
           // This will pin the slide visual area and add it to the window controller
           .on("enter", ({ scrollDirection }) => {

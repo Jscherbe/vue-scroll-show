@@ -35,28 +35,3 @@
     }
   };
 </script>
-
-<style lang="scss">
-  .scroll-show__nav {
-    position: absolute;
-    z-index: 100;
-    width: auto;
-    top: 50%;
-    right: 2rem;
-    width: max-content;
-    // margin-left: auto;
-    // margin-right: 2em;
-  }
-  .scroll-show__nav-list {
-    height: 100%;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-auto-flow: row;
-    grid-template-rows: auto;
-  }
-  .scroll-show__nav-item {
-    display: flex;
-    align-items: center;
-    justify-items: center;
-  }
-</style>

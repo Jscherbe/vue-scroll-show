@@ -1,12 +1,12 @@
 <template>
   <ScrollShow 
     class="custom-show" 
-    :count="slides.length"
+    :scenes="slides.length"
     sceneHeight="200vh"
-    height="50vh"
+    height="100vh"
   >
     <template #default="{ activeIndex }">
-
+      <ScrollShowNav/>
       <div class="custom-show__backgrounds">
         <template v-for="(slide, index) in slides" :key="index">
           <transition name="fade">
@@ -27,7 +27,7 @@
           </transition>
         </template>
       </div>
-
+      <ScrollShowProgress/>
     </template>
 
     <template #nav="{ index }">
@@ -38,22 +38,40 @@
 
 <script setup>
   import ScrollShow from "../lib/ScrollShow.vue";
+  import ScrollShowNav from "../lib/ScrollShowNav.vue";
+  import ScrollShowProgress from "../lib/ScrollShowProgress.vue";
   import { slides } from "./slides.js";
 </script>
 
 <style lang="scss">
   .custom-show {
+    .scroll-show__nav {
+      position: absolute;
+      z-index: 100;
+      width: auto;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 2rem;
+    }
     .scroll-show__nav-button {
-      background-color: gray;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .scroll-show__nav-button {
+      background-color: white;
+      color: rgb(67, 67, 67);
       box-shadow: 0 0 10px rgba(0,0,0,0.4);
       border-radius: 50%;
       width: 2em;
       height: 2em;
+      margin: 0.5em 0;
+      transition: background-color 200ms;
       &.is-active {
+        background-color: rgb(212, 167, 32);
         color: black;
       }
     }
-    
   }
   .custom-show__backgrounds {
     position: absolute;
