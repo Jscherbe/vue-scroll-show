@@ -258,20 +258,16 @@
         this.$nextTick(() => {
           this.initialize();
         });
-        console.log('Updates');
       },
     },
     watch: {
       scenes() {
-        console.log('Watch scenes');
         this.update();
       },
       sceneHeight() {
-        console.log('Watch sceneHeight');
         this.update();
       },
       height() {
-        console.log('Watch height');
         this.update();
       }
     },

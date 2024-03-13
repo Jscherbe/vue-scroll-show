@@ -46,7 +46,6 @@
   import { slides } from "./slides.js";
   const changingSlides = ref([ ...slides ]);
   setTimeout(() => {
-    console.log("popped");
     changingSlides.value.shift();
   }, 5000);
 </script>
