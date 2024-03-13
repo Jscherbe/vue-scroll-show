@@ -20,7 +20,7 @@ Note: This component just provides a way to create scroll based sticky presentat
 ## Props
 
 - **scenes** {Number, Array} - The amount of scenes to create (since they are simulated), optionally provide an array of scenes (where the value will be the duration/height of the given scene)
-- **sceneHeight** {Function, String, Number} - The height of each scene (when not specifying 'scenes' with array), can be either a number (pixels static), string (css unit with either vh, %, or px), or function that is passed the scene index and expects a number (which is in pixels) to set the height.
+- **sceneHeight** {Function, String,} - The height of each scene (when not specifying 'scenes' with array), should be a valid css unit (100dvh for example) or function that is passed the scene index and expects a string returned
 - **height** {Function, String, Number} - Works the same as 'sceneHeight' but sets the height for the presentation (the presentation is the sticky element that displays the scenes)
 
 ## Slot Props
@@ -30,7 +30,6 @@ The following are provided as slot props to be used to control your animations/s
 - **activeIndex** {Number} - The currently active index (defaults to 0, first scene)
 - **progress** {Number} - Fraction of 1 representing percentage complete (0-1)
 - **scrollTo** {Function} - Trigger programmatic scroll to a given scene (argument is index of scene)
-- **triggers** {Array} - Triggers data if needed
 - **active** {Boolean} - Whether the show is active (in view and triggered)
 - **scrollDirection** {String} - Current scroll direction (null if not within main scene)
 - **resolvedHeight** {Number} - The calculated height for the show, if needed

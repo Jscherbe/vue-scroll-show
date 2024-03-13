@@ -11,7 +11,7 @@
     <div 
       class="scroll-show__presentation" 
       ref="presentation"
-      :style="{ height: toPx(resolvedHeight) }"
+      :style="{ height }"
     >
       <slot 
         :activeIndex="activeIndex" 
@@ -20,7 +20,6 @@
         :triggers="triggers"
         :active="active"
         :scrollDirection="scrollDirection"
-        :resolvedHeight="resolvedHeight"
       />
     </div>
     <!-- 
@@ -34,15 +33,16 @@
       class="scroll-show__triggers" 
       ref="triggers"
       :style="{ 
-        marginTop: `-${ toPx(resolvedHeight) }`,
+        marginTop: `-${ height }`,
       }"
     >
+      {{  console.log(`-${ height }`) }}
       <div 
         class="scroll-show__trigger"
-        v-for="(trigger, index) in triggers"
-        :key="index"
-        :style="{ height: toPx(trigger.height) }"
-        :ref="(el) => { trigger.element = el }"
+        v-for="trigger in triggers"
+        :key="trigger.id"
+        :style="{ height: trigger.height }"
+        :id="trigger.id"
       ></div>
     </div>
   </div>
@@ -52,10 +52,8 @@
   import { computed } from "vue";
   import * as ScrollMagic from "scrollmagic";
   import { debounce } from "@ulu/utils/performance.js";
-  import { windowHeight } from "@ulu/utils/browser/dom.js";
-  import { separateCssUnit } from "@ulu/utils/string.js";
   import { ACTIVE_INDEX, TRIGGERS, SCROLLTO, PROGRESS } from "./symbols.js";
-  
+  let idCounter = 0;
   export default {
     name: "ScrollShow",
     props: {
@@ -68,22 +66,20 @@
         required: true
       },
       /**
-       * How long (in unitless pixels) a scene should be
+       * How long (in css units) a scene should be
        * - Optionally pass a function (given scene index)
-       * - Or pass a string that uses [px, %, vh] 
-       *   (with percentages being based on windowHeight)
        */
       sceneHeight: {
-        type: [Function, String, Number],
-        default: () => windowHeight()
+        type: [Function, String],
+        default: "100dvh"
       },
       /**
        * Accepts the same options as sceneHeight but for setting 
        * the height of the presentation
        */
       height: {
-        type: [Function, String, Number],
-        default: () => windowHeight()
+        type: [Function, String],
+        default: "200dvh"
       }
     },
     data() {
@@ -91,10 +87,8 @@
         progress: 0,
         progressTicking: false,
         activeIndex: 0,
-        triggers: this.createTriggers(),
         active: false, // Else it is after
         scrollDirection: null,
-        resolvedHeight: this.resolveHeight(this.height)
       };
     },
     provide() {
@@ -106,60 +100,36 @@
       };
     },
     computed: {
-      totalHeight() {
-        const { triggers } = this;
-        return triggers.reduce((total, t) => total + t.height, 0);
+      triggers() {
+        const { scenes } = this;
+        const array = typeof scenes === "number" ? { length: scenes } : scenes;
+        return Array.from(array, (custom, index) => ({
+          height: this.resolveHeight(custom ?? this.sceneHeight, index),
+          scene: null,
+          id: this.getId("t")
+        }));
       },
-      duration() {
-        const { totalHeight, resolvedHeight } = this;
-        // Removing the height of the screen so the screen can end when the main
-        // scene starts scrolling up (ending one totalHeight early)
-        // This makes the progress = to the length of the sticky scene instead of 
-        // based just on when it enters / exits the viewport (ends up with scrolling progress)
-        return totalHeight - resolvedHeight;
-      }
     },
     methods: {
+      getId(prefix) {
+        return `ulu-vss-${ prefix }-${ ++idCounter }`;
+      },
       resolveHeight(val, ...args) {
         const type = typeof val;
         if (type === "function") {
           return val(...args);
-        } else if (type === "number") {
-          return val;
         } else if (type === "string") {
-          return this.resolveCssUnit(val);
+          return val;
         } else {
-          throw Error("Unable to resolve height, expected string, number or function:", val);
+          throw Error("Unable to resolve height, expected string or function:", val);
         }
       },
-      resolveCssUnit(val) {
-        const { unit, value } = separateCssUnit(val);
-        const isPerc = ["vh", "%"].includes(unit);
-        if (isPerc) {
-          return windowHeight() * (value / 100);
-        } else {
-          return value;
-        }
-      },
-      toPx(number) {
-        return number + "px";
-      },
-      createTriggers() {
-        const { scenes, resolveHeight, sceneHeight } = this;
-        const array = typeof scenes === "number" ? { length: scenes } : scenes;
-        return Array.from(array, (custom, index) => {
-          const trigger = {
-            height: 0,
-            scene: null,
-            element: null
-          };
-          const updateHeight = () => {
-            trigger.height = resolveHeight(custom ?? sceneHeight, index);
-          };
-          trigger.updateHeight = updateHeight;
-          trigger.updateHeight();
-          return trigger;
-        });
+      /**
+       * Height of whole scene minus the presentation (so it completes by the time it unsticks)
+       */
+      getMainDuration() {
+        const { triggers, presentation } = this.$refs;
+        return triggers.clientHeight - presentation.clientHeight;
       },
       destroy() {
         // Destroy the scroll magic instance and the resize handler, 
@@ -169,32 +139,34 @@
       // Navigated to another scene programmatically (dots use this)
       scrollTo(index) {
         // const title = document.getElementById(this.titleId(index));
-        this.controller.scrollTo(this.triggers[index].scene);
-        this.$emit("scrollTo", { index });
+        const trigger = this.triggers[index];
+        if (trigger) {
+          this.controller.scrollTo(document.getElementById(trigger.id));
+          this.$emit("scrollTo", { index });
+        }
       },
       resize() {
         // Update window height (causes properties for heights to recalculate)
-        this.triggers.forEach(trigger => trigger.updateHeight());
-        this.mainScene.duration(this.duration);
+        // this.triggers.forEach(trigger => trigger.updateHeight());
+        this.mainScene.duration(this.getMainDuration());
         this.$emit("afterResize");
       },
       initialize() {
-        const { duration } = this;
         const { container } = this.$refs;
         // Controller for the scenes (attached to window)
         this.controller = new ScrollMagic.Controller();
         // Attach scenes for each trigger element these will fire the animations
         // like keyframes between the scroll points
-        this.triggers.forEach((trigger, index) => {
-          const { element } = trigger;
+        this.triggerScenes = this.triggers.map((trigger, index) => {
+          const triggerElement = document.getElementById(trigger.id);
           // Create a new scene for each trigger
           // the duration is set to the height of the trigger element
           // calculated above in computed property
-          trigger.scene = new ScrollMagic
+          return new ScrollMagic
             .Scene({
-              triggerElement: element,
+              triggerElement,
               triggerHook: 0.5,
-              duration: trigger.height
+              duration: "100%"
             })
             .on("enter", () => {
               this.activeIndex = index;
@@ -202,7 +174,6 @@
             })
             // Attach handler on scene enter to change the active slide
             .addTo(this.controller);
-
         });
 
         // console.log("this.totalHeight:\n", this.totalHeight);
@@ -214,7 +185,7 @@
           .Scene({
             triggerElement: container,
             triggerHook: 0, 
-            duration
+            duration: this.getMainDuration()
           })
           // This will pin the slide visual area and add it to the window controller
           .on("enter", ({ scrollDirection }) => {
@@ -248,13 +219,11 @@
             }
           })
           .addTo(this.controller);
-        
+
         this.$emit("initialized");
       },
       update() {
         this.destroy();
-        this.triggers = this.createTriggers();
-        this.resolvedHeight = this.resolveHeight(this.height);
         this.$nextTick(() => {
           this.initialize();
         });

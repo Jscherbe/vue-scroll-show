@@ -1,6 +1,6 @@
 {
   "name": "@ulu/vue-scroll-show",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Minimal component to create sticky scrolling based slideshow. Uses scrollmagic library and position sticky to create scenes (like scroll keyframes). ",
   "type": "module",
   "main": "./dist/lib.umd.cjs",
@@ -26,6 +26,7 @@
   "scripts": {
     "dev": "vite",
     "dev:force": "vite --force",
+    "dev:host": "vite --host",
     "build": "vite build",
     "build-docs": "vite build --config vite.config.demo.js",
     "preview": "vite preview",

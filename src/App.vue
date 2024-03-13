@@ -8,7 +8,7 @@
     class="custom-show" 
     :scenes="changingSlides.length"
     sceneHeight="200vh"
-    height="100vh"
+    height="100dvh"
     v-slot="{ activeIndex }"
   >
     <ScrollShowNav/>
@@ -45,9 +45,9 @@
   import AppSpacer from "./AppSpacer.vue";
   import { slides } from "./slides.js";
   const changingSlides = ref([ ...slides ]);
-  setTimeout(() => {
-    changingSlides.value.shift();
-  }, 5000);
+  // setTimeout(() => {
+  //   changingSlides.value.shift();
+  // }, 5000);
 </script>
 
 <style lang="scss">
@@ -97,9 +97,11 @@
     position: absolute;
     z-index: 101;
     top: 50%;
-    left: 20%;
-    max-width: 80%;
-    padding-right: 10rem;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 50vh;
+    text-align: center;
+    // padding-right: 10rem;
     color: white;
     font-size: 30px;
   }
