@@ -1,13 +1,17 @@
+<!-- 
+  Notes:
+    - The presentation is the sticky element 
+      - invisible triggers below are what make up the space on page 
+    - Triggers: Responsible only for taking up space and triggering
+    the animations of the sticky slides above
+      - Pull it under the full amount of the presentation
+-->
 <template>
   <div 
     class="scroll-show" 
     ref="container"
     :class="{ 'scroll-show--active' : active }"
   >
-    <!-- 
-    The presentation is the sticky element 
-    - invisible triggers below are what make up the space on page 
-    -->
     <div 
       class="scroll-show__presentation" 
       ref="presentation"
@@ -17,26 +21,15 @@
         :activeIndex="activeIndex" 
         :progress="progress"
         :scrollTo="scrollTo"
-        :triggers="triggers"
         :active="active"
         :scrollDirection="scrollDirection"
       />
     </div>
-    <!-- 
-      Triggers: Responsible only for taking up space and triggering
-      the animations of the sticky slides above
-      - Pull it under the full amount of the presentation
-
-        paddingBottom: toPx(presentationHeight)
-     -->
-     <div 
+    <div 
       class="scroll-show__triggers" 
       ref="triggers"
-      :style="{ 
-        marginTop: `-${ height }`,
-      }"
+      :style="{ marginTop: `-${ height }` }"
     >
-      {{  console.log(`-${ height }`) }}
       <div 
         class="scroll-show__trigger"
         v-for="trigger in triggers"
@@ -175,9 +168,6 @@
             // Attach handler on scene enter to change the active slide
             .addTo(this.controller);
         });
-
-        // console.log("this.totalHeight:\n", this.totalHeight);
-        // console.log("container.clientHeight:\n", container.clientHeight);
         
         // Create the main scene, which holds the nested trigger scenes and the 
         // pinned container which holds the actual slide display
